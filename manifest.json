@@ -1,0 +1,21 @@
+{
+  "name": "PulseWave Entertainment",
+  "short_name": "PulseWave",
+  "description": "PulseWave Entertainment — Independent Record Label",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#1e90ff",
+  "icons": [
+    {
+      "src": "https://res.cloudinary.com/dnx2afsnl/image/upload/q_auto/f_auto/v1779559381/file_0000000059387246ad0548cda3624042_mgc7ww.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://res.cloudinary.com/dnx2afsnl/image/upload/q_auto/f_auto/v1779559381/file_0000000059387246ad0548cda3624042_mgc7ww.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
