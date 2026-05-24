@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta property="og:title" content="Emmanuel Kumayon — Creator. Builder. Founder."/>
+<meta property="og:description" content="Web Developer, Shoe Maker & Tech Creator based in Ogun State, Nigeria. Building premium digital solutions for businesses across Africa."/>
+<meta property="og:image" content="https://res.cloudinary.com/der2skscn/image/upload/q_auto/f_auto/v1779535554/1000246954-removebg-preview_hkmc8o.png"/>
+<meta property="og:url" content="https://kumskid-web-hub.pages.dev"/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="theme-color" content="#c9a96e"/>
+<title>Emmanuel Kumayon — Creator. Builder. Founder.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --gold: #c9a96e;
+    --gold-light: #e8c98a;
+    --gold-dark: #8a6a3a;
+    --black: #080808;
+    --dark: #0e0e0e;
+    --dark2: #141414;
+    --dark3: #1a1a1a;
+    --white: #f5f0e8;
+    --gray: #888;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.18s ease, width 0.2s, height 0.2s;
+    opacity: 0.6;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dark); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
+    backdrop-filter: blur(4px);
+  }
+  .nav-logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+  .nav-logo img {
+    height: 52px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(201,169,110,0.3));
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    padding: 10px 24px;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+  .nav-cta:hover { background: var(--gold-light); }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 1px; background: var(--gold); display: block; transition: 0.3s; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(201,169,110,0.07) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,169,110,0.04) 0%, transparent 50%);
+  }
+  .hero-grain {
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.4; pointer-events: none;
+  }
+  .hero-line {
+    position: absolute; top: 0; right: 200px;
+    width: 1px; height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--gold-dark), transparent);
+    opacity: 0.3;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 900px; }
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--gold);
+    display: block;
+  }
+  .hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 12vw, 10rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
+  }
+  .hero-name span { color: var(--gold); }
+  .hero-surname {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+    margin-bottom: 40px;
+  }
+  .hero-roles {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 48px;
+  }
+  .role-tag {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border: 1px solid rgba(201,169,110,0.3);
+    color: var(--gold);
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s;
+  }
+  .role-tag::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--gold);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+  }
+  .role-tag:hover::before { transform: translateX(0); }
+  .role-tag:hover { color: var(--black); }
+  .hero-desc {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.6);
+    max-width: 520px;
+    margin-bottom: 52px;
+  }
+  .hero-actions { display: flex; gap: 20px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    background: var(--gold);
+    color: var(--black);
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-secondary {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    border: 1px solid rgba(201,169,110,0.4);
+    color: var(--gold);
+    text-decoration: none;
+    transition: 0.3s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); background: rgba(201,169,110,0.05); }
+
+  .hero-scroll {
+    position: absolute; bottom: 48px; left: 48px;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 0.65rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--gray);
+  }
+  .scroll-line {
+    width: 40px; height: 1px;
+    background: var(--gray);
+    position: relative; overflow: hidden;
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: var(--gold);
+    animation: scrollLine 2s infinite;
+  }
+  @keyframes scrollLine {
+    to { left: 100%; }
+  }
+
+  .hero-stat-row {
+    position: absolute; bottom: 48px; right: 48px;
+    display: flex; gap: 48px;
+  }
+  .hero-stat { text-align: right; }
+  .hero-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .hero-stat-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+
+  /* SECTION COMMON */
+  section { padding: 120px 48px; }
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .section-label::before {
+    content: '//';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: var(--gold-dark);
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    margin-bottom: 16px;
+  }
+  .section-title em {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 1.1em;
+  }
+  .divider {
+    width: 60px; height: 1px;
+    background: var(--gold-dark);
+    margin-bottom: 64px;
+  }
+
+  /* ABOUT */
+  #about { background: var(--dark2); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1200px;
+  }
+  .about-img-wrap {
+    position: relative;
+  }
+  .about-img-frame {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--dark3);
+    border: 1px solid rgba(201,169,110,0.15);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-img-frame::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(201,169,110,0.1);
+    pointer-events: none;
+  }
+  .about-monogram {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 8rem;
+    color: rgba(201,169,110,0.08);
+    letter-spacing: 0.1em;
+  }
+  .about-img-label {
+    position: absolute; bottom: 24px; left: 24px;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .about-badge {
+    position: absolute; top: -20px; right: -20px;
+    width: 100px; height: 100px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+  }
+  .about-badge span:first-child {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: var(--black);
+    line-height: 1;
+  }
+  .about-badge span:last-child {
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--black);
+  }
+  .about-text p {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: rgba(245,240,232,0.65);
+    margin-bottom: 24px;
+    font-weight: 300;
+  }
+  .about-text p strong { color: var(--gold); font-weight: 500; }
+  .about-skills {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 36px;
+  }
+  .skill-chip {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    background: rgba(201,169,110,0.08);
+    border: 1px solid rgba(201,169,110,0.2);
+    color: var(--gold);
+  }
+
+  /* BRANDS */
+  #brands { background: var(--black); }
+  .brands-intro {
+    max-width: 600px;
+    margin-bottom: 80px;
+  }
+  .brands-intro p {
+    color: rgba(245,240,232,0.55);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+  .brands-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .brand-card {
+    background: var(--dark2);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: 0.4s;
+    text-decoration: none;
+    display: block;
+    border-bottom: 2px solid transparent;
+  }
+  .brand-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(201,169,110,0.04) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .brand-card:hover { border-bottom-color: var(--gold); }
+  .brand-card:hover::before { opacity: 1; }
+  .brand-card:hover { transform: translateY(-4px); }
+  .brand-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    color: var(--gold-dark);
+    margin-bottom: 32px;
+  }
+  .brand-icon {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .brand-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+  .brand-type {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .brand-desc {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--gray);
+    font-weight: 300;
+  }
+  .brand-arrow {
+    position: absolute; bottom: 32px; right: 32px;
+    font-size: 1.2rem;
+    color: var(--gold-dark);
+    transition: 0.3s;
+  }
+  .brand-card:hover .brand-arrow { color: var(--gold); transform: translate(4px, -4px); }
+
+  /* PORTFOLIO */
+  #portfolio { background: var(--dark2); }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .project-card {
+    background: var(--dark3);
+    border: 1px solid rgba(201,169,110,0.08);
+    overflow: hidden;
+    position: relative;
+    transition: 0.4s;
+    text-decoration: none;
+    display: block;
+  }
+  .project-card:hover { border-color: rgba(201,169,110,0.3); transform: translateY(-6px); }
+  .project-thumb {
+    height: 240px;
+    background: var(--dark);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-thumb-inner {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    letter-spacing: 0.1em;
+    opacity: 0.15;
+    color: var(--gold);
+  }
+  .project-thumb-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(201,169,110,0.08), transparent);
+  }
+  .project-tag {
+    position: absolute; top: 20px; left: 20px;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    background: var(--gold);
+    color: var(--black);
+    font-weight: 500;
+  }
+  .project-body { padding: 32px; }
+  .project-client {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .project-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.03em;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .project-desc {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--gray);
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .ptag {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    background: rgba(201,169,110,0.06);
+    border: 1px solid rgba(201,169,110,0.15);
+    color: rgba(201,169,110,0.7);
+  }
+  .project-link {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: flex; align-items: center; gap: 8px;
+    transition: gap 0.3s;
+  }
+  .project-card:hover .project-link { gap: 14px; }
+
+  /* SERVICES */
+  #services { background: var(--black); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-bottom: 80px;
+  }
+  .service-card {
+    background: var(--dark2);
+    padding: 48px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s;
+  }
+  .service-card:hover { background: var(--dark3); }
+  .service-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: rgba(201,169,110,0.06);
+    position: absolute; top: 20px; right: 20px;
+    line-height: 1;
+  }
+  .service-icon { font-size: 1.8rem; margin-bottom: 24px; }
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.03em;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .service-desc {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--gray);
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+  .service-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  /* PRICING TABLE */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .pricing-card {
+    background: var(--dark2);
+    border: 1px solid rgba(201,169,110,0.1);
+    padding: 48px 36px;
+    position: relative;
+    transition: 0.3s;
+  }
+  .pricing-card.featured {
+    border-color: var(--gold);
+    background: var(--dark3);
+  }
+  .pricing-card.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute; top: -12px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--black);
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    padding: 4px 14px;
+    font-weight: 600;
+  }
+  .pricing-tier {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .pricing-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .pricing-amount span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    color: var(--gray);
+  }
+  .pricing-sub {
+    font-size: 0.75rem;
+    color: var(--gray);
+    margin-bottom: 36px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid rgba(201,169,110,0.1);
+  }
+  .pricing-features { list-style: none; margin-bottom: 40px; }
+  .pricing-features li {
+    font-size: 0.85rem;
+    color: rgba(245,240,232,0.65);
+    padding: 8px 0;
+    display: flex; gap: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .pricing-features li::before { content: '✦'; color: var(--gold); font-size: 0.6rem; margin-top: 3px; }
+  .pricing-cta {
+    display: block;
+    text-align: center;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 14px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    transition: 0.3s;
+  }
+  .pricing-card.featured .pricing-cta {
+    background: var(--gold);
+    color: var(--black);
+  }
+  .pricing-cta:hover { background: var(--gold); color: var(--black); }
+
+  /* CONTACT */
+  #contact { background: var(--dark2); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-info h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold-light);
+    margin-bottom: 24px;
+    line-height: 1.4;
+  }
+  .contact-info p {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--gray);
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+  .contact-items { display: flex; flex-direction: column; gap: 28px; }
+  .contact-item {
+    display: flex; gap: 20px; align-items: flex-start;
+  }
+  .contact-item-icon {
+    width: 44px; height: 44px;
+    background: rgba(201,169,110,0.08);
+    border: 1px solid rgba(201,169,110,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .contact-item-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .contact-item-val {
+    font-size: 0.9rem;
+    color: rgba(245,240,232,0.7);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .contact-item-val:hover { color: var(--gold); }
+  .contact-form { display: flex; flex-direction: column; gap: 20px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group label {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    background: rgba(201,169,110,0.04);
+    border: 1px solid rgba(201,169,110,0.15);
+    padding: 14px 18px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+    resize: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--gold); }
+  .form-group select option { background: var(--dark2); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .form-submit {
+    background: var(--gold);
+    border: none;
+    padding: 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--black);
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .form-submit:hover { background: var(--gold-light); }
+
+  /* SOCIAL */
+  .social-strip {
+    background: var(--black);
+    padding: 60px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(201,169,110,0.1);
+    flex-wrap: wrap; gap: 32px;
+  }
+  .social-links { display: flex; gap: 24px; }
+  .social-link {
+    width: 44px; height: 44px;
+    border: 1px solid rgba(201,169,110,0.2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    transition: 0.3s;
+  }
+  .social-link:hover { background: var(--gold); color: var(--black); }
+  .social-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: rgba(201,169,110,0.5);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    padding: 40px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-dark);
+  }
+  .footer-copy {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.05em;
+  }
+  .footer-back {
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-back:hover { color: var(--gold); }
+
+  /* ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    background: var(--gold);
+    padding: 16px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-flex;
+    animation: marquee 20s linear infinite;
+  }
+  .marquee-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.3em;
+    color: var(--black);
+    padding: 0 40px;
+  }
+  .marquee-dot {
+    color: rgba(0,0,0,0.3);
+    padding: 0 10px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 80px 24px; }
+    #hero { padding: 100px 24px 80px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-img-wrap { display: none; }
+    .brands-grid { grid-template-columns: 1fr; gap: 2px; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; gap: 2px; }
+    .pricing-grid { grid-template-columns: 1fr; gap: 16px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    .hero-stat-row { display: none; }
+    .social-strip { flex-direction: column; padding: 40px 24px; }
+    footer { padding: 28px 24px; }
+    .form-row { grid-template-columns: 1fr; }
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+  }
+
+  /* Mobile nav menu */
+  .mobile-menu {
+    position: fixed; inset: 0;
+    background: var(--black);
+    z-index: 200;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 32px;
+    transform: translateX(100%);
+    transition: transform 0.4s ease;
+  }
+  .mobile-menu.open { transform: translateX(0); }
+  .mobile-menu a {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .mobile-menu a:hover { color: var(--gold); }
+  .mobile-close {
+    position: absolute; top: 24px; right: 24px;
+    font-size: 1.5rem; color: var(--gold);
+    background: none; border: none;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMenu()">✕</button>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#brands" onclick="toggleMenu()">Brands</a>
+  <a href="#portfolio" onclick="toggleMenu()">Work</a>
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo"><img src="https://res.cloudinary.com/der2skscn/image/upload/q_auto/f_auto/v1779535554/1000246954-removebg-preview_hkmc8o.png" alt="KUMSKID WEB"/></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#brands">Brands</a></li>
+    <li><a href="#portfolio">Work</a></li>
+    <li><a href="#services">Services</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Based in Ogun State, Nigeria</div>
+    <h1 class="hero-name">EMMA<span>NUEL</span></h1>
+    <div class="hero-surname">Olayinka Kumayon</div>
+    <div class="hero-roles">
+      <span class="role-tag">Web Developer</span>
+      <span class="role-tag">Shoe Maker</span>
+      <span class="role-tag">Tech Creator</span>
+      <span class="role-tag">Founder</span>
+      <span class="role-tag">Creative Director</span>
+    </div>
+    <p class="hero-desc">
+      I build digital experiences, craft premium footwear, and create content that moves people.
+      Every project is built with intention — from raw code to real results.
+    </p>
+    <div class="hero-actions">
+      <a href="#portfolio" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-secondary">Hire Me</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+  <div class="hero-stat-row">
+    <div class="hero-stat">
+      <div class="hero-stat-num">4+</div>
+      <div class="hero-stat-label">Live Sites</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">₦65K</div>
+      <div class="hero-stat-label">First Client</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">3</div>
+      <div class="hero-stat-label">Brands Built</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">WEB DEVELOPMENT</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">E-COMMERCE</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">INVENTORY SYSTEMS</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">BOOKING PLATFORMS</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">PREMIUM FOOTWEAR</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">CONTENT CREATION</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">MUSIC TECH</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">WEB DEVELOPMENT</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">E-COMMERCE</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">INVENTORY SYSTEMS</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">BOOKING PLATFORMS</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">PREMIUM FOOTWEAR</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">CONTENT CREATION</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">MUSIC TECH</span><span class="marquee-dot">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">Who I Am</div>
+  <div class="section-title">The Man <em>Behind</em><br>The Work</div>
+  <div class="divider"></div>
+  <div class="about-grid reveal">
+    <div class="about-img-wrap">
+      <div class="about-img-frame">
+        <div class="about-monogram">EK</div>
+        <div class="about-img-label">Emmanuel · Ogun State · Nigeria</div>
+      </div>
+      <div class="about-badge">
+        <span>2024</span>
+        <span>Est.</span>
+      </div>
+    </div>
+    <div class="about-text">
+      <p>I'm <strong>Emmanuel Olayinka Kumayon</strong> — a web developer, shoe maker, tech creator, and founder based in Ogun State, Nigeria.</p>
+      <p>A self-driven developer and technical builder, I specialize in building high-performing digital solutions from the ground up — combining modern technical execution with strategic problem-solving. My background is defined by building live, practical applications that demand a deep understanding of full-stack tools and optimization. Having launched and scaled paid client solutions early in my career, I bring a sharp, entrepreneurial perspective to every project — ensuring every platform I build is functional, optimized, and perfectly aligned with market readiness and brand excellence.</p>
+      <p>Today I run multiple brands — from luxury footwear to web development to music entertainment — all built from the ground up with raw hustle and digital craft.</p>
+      <div class="about-skills">
+        <span class="skill-chip">HTML / CSS / JS</span>
+        <span class="skill-chip">Flutterwave</span>
+        <span class="skill-chip">WhatsApp API</span>
+        <span class="skill-chip">Inventory Systems</span>
+        <span class="skill-chip">Booking Systems</span>
+        <span class="skill-chip">Music Platforms</span>
+        <span class="skill-chip">E-Commerce</span>
+        <span class="skill-chip">Payment Integration</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<section id="brands">
+  <div class="section-label">My Universe</div>
+  <div class="section-title">Brands I've <em>Built</em></div>
+  <div class="divider"></div>
+  <div class="brands-intro">
+    <p>Every brand solves a real problem and serves a real audience. From footwear to fashion to music to web development — each one is built with the same standard: excellence.</p>
+  </div>
+  <div class="brands-grid reveal">
+    <a href="https://kumskidfootwear-4km.pages.dev" target="_blank" class="brand-card">
+      <div class="brand-num">01</div>
+      <span class="brand-icon">👞</span>
+      <div class="brand-name">KUMSKID FOOTWEAR</div>
+      <div class="brand-type">Luxury Footwear Brand</div>
+      <p class="brand-desc">Premium handcrafted footwear for men, women and kids. Where craftsmanship meets distinction — built and sold online.</p>
+      <span class="brand-arrow">↗</span>
+    </a>
+    <a href="https://anny-luxe.pages.dev" target="_blank" class="brand-card">
+      <div class="brand-num">02</div>
+      <span class="brand-icon">👗</span>
+      <div class="brand-name">ANNY LUXE</div>
+      <div class="brand-type">Luxury Fashion · Client Delivery</div>
+      <p class="brand-desc">Premium luxury fashion for men and women in Ota, Ogun State. Full e-commerce site delivered to a paying client.</p>
+      <span class="brand-arrow">↗</span>
+    </a>
+    <a href="https://pulsewave-entertainment.pages.dev" target="_blank" class="brand-card">
+      <div class="brand-num">03</div>
+      <span class="brand-icon">🎵</span>
+      <div class="brand-name">PULSEWAVE ENTERTAINMENT</div>
+      <div class="brand-type">Music Record Label</div>
+      <p class="brand-desc">A music label platform with artist roster cards, discography pages, music streaming previews and song unlock payments.</p>
+      <span class="brand-arrow">↗</span>
+    </a>
+    <a href="https://www.tiktok.com/@lyrickingofficial" target="_blank" class="brand-card">
+      <div class="brand-num">04</div>
+      <span class="brand-icon">🎬</span>
+      <div class="brand-name">LYRICSKING OFFICIAL</div>
+      <div class="brand-type">Animated Lyric Videos · TikTok</div>
+      <p class="brand-desc">Crafting powerful Afrobeats anthems with AI-powered lyrics. Animated lyric video content on TikTok.</p>
+      <span class="brand-arrow">↗</span>
+    </a>
+    <a href="https://2up-2down-apartment.pages.dev" target="_blank" class="brand-card">
+      <div class="brand-num">05</div>
+      <span class="brand-icon">🏠</span>
+      <div class="brand-name">2UP 2DOWN APARTMENTS</div>
+      <div class="brand-type">Short-Let Booking Platform</div>
+      <p class="brand-desc">Luxury short-let apartment booking system with live availability calendar, price calculator and inventory management.</p>
+      <span class="brand-arrow">↗</span>
+    </a>
+    <a href="https://www.upwork.com/freelancers/~015246c55e2081a09f" target="_blank" class="brand-card">
+      <div class="brand-num">06</div>
+      <span class="brand-icon">💼</span>
+      <div class="brand-name">KUMSKID WEB</div>
+      <div class="brand-type">Web Development · For Hire</div>
+      <p class="brand-desc">Professional web development services for businesses across Nigeria. E-commerce, booking systems, inventory platforms and more.</p>
+      <span class="brand-arrow">↗</span>
+    </a>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-label">Selected Work</div>
+  <div class="section-title">Projects <em>Delivered</em></div>
+  <div class="divider"></div>
+  <div class="portfolio-grid reveal">
+    <a href="https://anny-luxe.pages.dev" target="_blank" class="project-card">
+      <div class="project-thumb" style="background: #0a0a0a;">
+        <img src="https://res.cloudinary.com/der2skscn/image/upload/q_auto/f_auto/v1779537644/Screenshot_20260523_125751_Photos_2_eefet2.jpg" alt="Anny Luxe" style="width:100%;height:100%;object-fit:cover;opacity:0.85;"/>
+        <div class="project-thumb-overlay"></div>
+        <span class="project-tag">Client · Delivered</span>
+      </div>
+      <div class="project-body">
+        <div class="project-client">Fashion · Ota, Ogun State</div>
+        <div class="project-title">Anny Luxe E-Commerce</div>
+        <p class="project-desc">Full luxury fashion e-commerce site with product catalog, cart system, payment checkout, and media management. Successfully delivered and live for the client.</p>
+        <div class="project-tags">
+          <span class="ptag">E-Commerce</span>
+          <span class="ptag">Payment Integration</span>
+          <span class="ptag">Cart System</span>
+          <span class="ptag">Mobile Responsive</span>
+        </div>
+        <span class="project-link">View Live Site →</span>
+      </div>
+    </a>
+    <a href="https://pulsewave-entertainment.pages.dev" target="_blank" class="project-card">
+      <div class="project-thumb" style="background: #0a0a0a;">
+        <img src="https://res.cloudinary.com/der2skscn/image/upload/q_auto/f_auto/v1779537114/IMG-20260508-WA0012_u0syv2.jpg" alt="PulseWave Entertainment" style="width:100%;height:100%;object-fit:cover;opacity:0.85;"/>
+        <div class="project-thumb-overlay"></div>
+        <span class="project-tag">Personal</span>
+      </div>
+      <div class="project-body">
+        <div class="project-client">Music · Record Label Platform</div>
+        <div class="project-title">PulseWave Entertainment</div>
+        <p class="project-desc">Music label site with artist roster, individual artist pages, built-in audio player, and song unlock payment system.</p>
+        <div class="project-tags">
+          <span class="ptag">Music Platform</span>
+          <span class="ptag">Audio Player</span>
+          <span class="ptag">Monetization</span>
+          <span class="ptag">Multi-page</span>
+        </div>
+        <span class="project-link">View Live Site →</span>
+      </div>
+    </a>
+    <a href="https://kumskidfootwear-4km.pages.dev" target="_blank" class="project-card">
+      <div class="project-thumb" style="background: #0a0a0a;">
+        <img src="https://res.cloudinary.com/der2skscn/image/upload/q_auto/f_auto/v1779537321/IMG_20260510_102602_021_n75mkh.webp" alt="KUMSKID Footwear" style="width:100%;height:100%;object-fit:cover;opacity:0.85;"/>
+        <div class="project-thumb-overlay"></div>
+        <span class="project-tag">Personal Brand</span>
+      </div>
+      <div class="project-body">
+        <div class="project-client">Footwear · Luxury Retail</div>
+        <div class="project-title">KUMSKID Footwear Store</div>
+        <p class="project-desc">Premium footwear e-commerce with size selector, cart, payment integration, product filtering, PWA support and WhatsApp integration.</p>
+        <div class="project-tags">
+          <span class="ptag">E-Commerce</span>
+          <span class="ptag">Size Selector</span>
+          <span class="ptag">PWA Ready</span>
+          <span class="ptag">Payment Integration</span>
+        </div>
+        <span class="project-link">View Live Site →</span>
+      </div>
+    </a>
+    <a href="https://2up-2down-apartment.pages.dev" target="_blank" class="project-card">
+      <div class="project-thumb" style="background: #0a0a0a; display:flex; align-items:center; justify-content:center;">
+        <div style="text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif; font-size:3rem; color:rgba(201,169,110,0.2); letter-spacing:0.1em;">2UP 2DOWN</div>
+          <div style="font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase; color:rgba(201,169,110,0.3); margin-top:8px;">Logo Coming Soon</div>
+        </div>
+        <div class="project-thumb-overlay"></div>
+        <span class="project-tag">In Progress</span>
+      </div>
+      <div class="project-body">
+        <div class="project-client">Real Estate · Short-Let · Ota</div>
+        <div class="project-title">2Up 2Down Apartments</div>
+        <p class="project-desc">Luxury short-let booking platform with live availability calendar, dynamic price calculator, multi-apartment selection, and owner inventory tracking system.</p>
+        <div class="project-tags">
+          <span class="ptag">Booking System</span>
+          <span class="ptag">Live Calendar</span>
+          <span class="ptag">Inventory</span>
+          <span class="ptag">Price Calculator</span>
+        </div>
+        <span class="project-link">View Live Site →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">What I Offer</div>
+  <div class="section-title">Services & <em>Pricing</em></div>
+  <div class="divider"></div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-icon">🌐</div>
+      <div class="service-name">Business Website</div>
+      <p class="service-desc">Clean, fast, mobile-responsive business sites. Perfect for small businesses needing a professional online presence with contact forms and social links.</p>
+      <div class="service-price">From ₦80,000</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-icon">🛒</div>
+      <div class="service-name">E-Commerce Store</div>
+      <p class="service-desc">Full online stores with product catalog, cart, payment integration (Flutterwave/Paystack), order management and WhatsApp notifications.</p>
+      <div class="service-price">From ₦150,000</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-icon">📅</div>
+      <div class="service-name">Booking System</div>
+      <p class="service-desc">Availability calendars, reservation forms, date pickers, dynamic pricing calculators — for hotels, short-lets, salons, and event spaces.</p>
+      <div class="service-price">From ₦200,000</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-icon">📦</div>
+      <div class="service-name">Inventory System</div>
+      <p class="service-desc">Track stock, manage orders, monitor bookings. Custom-built inventory dashboards tailored to your specific business operations.</p>
+      <div class="service-price">From ₦180,000</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-icon">🎵</div>
+      <div class="service-name">Music / Artist Platform</div>
+      <p class="service-desc">Artist pages, discography, built-in audio players, music monetization systems, label rosters and fan engagement tools.</p>
+      <div class="service-price">From ₦250,000</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <div class="service-icon">🔧</div>
+      <div class="service-name">Maintenance & Updates</div>
+      <p class="service-desc">Ongoing support, content updates, new feature additions, performance monitoring and hosting management for existing websites.</p>
+      <div class="service-price">From ₦25,000/mo</div>
+    </div>
+  </div>
+
+  <!-- PRICING PACKAGES -->
+  <div style="margin-top: 80px;">
+    <div class="section-label" style="margin-bottom:16px;">Packages</div>
+    <div class="section-title" style="margin-bottom:16px;">Pick Your <em>Plan</em></div>
+    <div class="divider"></div>
+    <div class="pricing-grid reveal">
+      <div class="pricing-card">
+        <div class="pricing-tier">Starter</div>
+        <div class="pricing-amount">₦80K <span>+</span></div>
+        <div class="pricing-sub">Best for new small businesses</div>
+        <ul class="pricing-features">
+          <li>Business / Portfolio Website</li>
+          <li>Mobile Responsive Design</li>
+          <li>Contact Form Integration</li>
+          <li>WhatsApp Button</li>
+          <li>Social Media Links</li>
+          <li>Fast & Secure Hosting Setup</li>
+          <li>1 Month Free Support</li>
+        </ul>
+        <a href="#contact" class="pricing-cta">Get Started</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-tier">Professional</div>
+        <div class="pricing-amount">₦150K <span>+</span></div>
+        <div class="pricing-sub">Best for growing businesses</div>
+        <ul class="pricing-features">
+          <li>Full E-Commerce Website</li>
+          <li>Product Catalog + Filtering</li>
+          <li>Cart & Checkout System</li>
+          <li>Payment Gateway Integration</li>
+          <li>Product Media Management</li>
+          <li>WhatsApp Order Alerts</li>
+          <li>3 Months Free Support</li>
+        </ul>
+        <a href="#contact" class="pricing-cta">Get Started</a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-tier">Enterprise</div>
+        <div class="pricing-amount">₦300K <span>+</span></div>
+        <div class="pricing-sub">For complex systems & platforms</div>
+        <ul class="pricing-features">
+          <li>Booking / Inventory System</li>
+          <li>Custom Admin Dashboard</li>
+          <li>Multi-page Architecture</li>
+          <li>Payment + Calendar Logic</li>
+          <li>Music / Media Platform</li>
+          <li>Full Tool Stack Setup</li>
+          <li>6 Months Free Support</li>
+        </ul>
+        <a href="#contact" class="pricing-cta">Get Started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section style="background: var(--black); padding: 80px 48px;">
+  <div class="section-label">Client Words</div>
+  <div class="section-title">What They <em>Say</em></div>
+  <div class="divider"></div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;" class="reveal">
+    <div style="background: var(--dark2); border: 1px solid rgba(201,169,110,0.12); padding: 40px; position: relative;">
+      <div style="font-size: 4rem; color: rgba(201,169,110,0.15); font-family: 'Cormorant Garamond', serif; position: absolute; top: 16px; left: 24px; line-height: 1;">"</div>
+      <p style="font-size: 0.95rem; line-height: 1.8; color: rgba(245,240,232,0.7); font-weight: 300; margin-bottom: 28px; padding-top: 24px;">My customers shop directly from my website now — no more DMs, no more stress. Emmanuel built exactly what my business needed. Fast, beautiful, and professional.</p>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <div style="width: 44px; height: 44px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; color: var(--black); font-size: 1.1rem;">AL</div>
+        <div>
+          <div style="font-size: 0.8rem; font-weight: 500; color: var(--white);">Anny Luxe</div>
+          <div style="font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold);">Fashion Brand · Ota, Ogun State</div>
+        </div>
+      </div>
+    </div>
+    <div style="background: var(--dark2); border: 1px solid rgba(201,169,110,0.12); padding: 40px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 220px;">
+      <div style="font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px;">Your Business Could Be Next</div>
+      <p style="font-size: 0.9rem; color: var(--gray); font-weight: 300; margin-bottom: 28px;">Ready to have a website that works for you 24/7?</p>
+      <a href="#contact" style="font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 12px 28px; background: var(--gold); color: var(--black); text-decoration: none; font-weight: 500;">Get Started →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Get In Touch</div>
+  <div class="section-title">Let's Build <em>Together</em></div>
+  <div class="divider"></div>
+  <div class="contact-grid reveal">
+    <div class="contact-info">
+      <h3>"Every great website starts with a single conversation."</h3>
+      <p>Whether you need an e-commerce store, a booking platform, an inventory system or just a clean business website — I'm ready to build it. Fast, affordable, and professional.</p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div>
+            <div class="contact-item-label">Location</div>
+            <span class="contact-item-val">Ogun State, Nigeria</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📞</div>
+          <div>
+            <div class="contact-item-label">WhatsApp</div>
+            <a href="https://wa.me/2348106875407" class="contact-item-val">+234 810 687 5407</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">💼</div>
+          <div>
+            <div class="contact-item-label">Upwork</div>
+            <a href="https://www.upwork.com/freelancers/~015246c55e2081a09f" target="_blank" class="contact-item-val">Hire on Upwork</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">🔗</div>
+          <div>
+            <div class="contact-item-label">All Links</div>
+            <a href="https://linktr.ee/emmanuelkumayon" target="_blank" class="contact-item-val">linktr.ee/emmanuelkumayon</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" placeholder="Your name"/>
+        </div>
+        <div class="form-group">
+          <label>Phone / WhatsApp</label>
+          <input type="text" placeholder="+234..."/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Service Needed</label>
+        <select>
+          <option value="">Select a service</option>
+          <option>Business Website (₦80K+)</option>
+          <option>E-Commerce Store (₦150K+)</option>
+          <option>Booking System (₦200K+)</option>
+          <option>Inventory System (₦180K+)</option>
+          <option>Music / Artist Platform (₦250K+)</option>
+          <option>Maintenance & Updates (₦25K/mo)</option>
+          <option>Custom / Not Sure</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Budget Range</label>
+        <select>
+          <option value="">Select budget</option>
+          <option>Under ₦100,000</option>
+          <option>₦100,000 – ₦200,000</option>
+          <option>₦200,000 – ₦400,000</option>
+          <option>Above ₦400,000</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tell Me About Your Project</label>
+        <textarea rows="5" placeholder="Describe what you need..."></textarea>
+      </div>
+      <button class="form-submit" onclick="sendWhatsApp()">Send via WhatsApp →</button>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL STRIP -->
+<div class="social-strip">
+  <div class="social-links">
+    <a href="https://www.instagram.com/kumskid_footwear" target="_blank" class="social-link">IG</a>
+    <a href="https://tiktok.com/@kumskid0" target="_blank" class="social-link">TK</a>
+    <a href="https://www.tiktok.com/@lyrickingofficial" target="_blank" class="social-link">LK</a>
+    <a href="https://wa.me/2348106875407" target="_blank" class="social-link">WA</a>
+    <a href="https://www.upwork.com/freelancers/~015246c55e2081a09f" target="_blank" class="social-link">UW</a>
+    <a href="https://linktr.ee/emmanuelkumayon" target="_blank" class="social-link">LT</a>
+  </div>
+  <div class="social-tagline">"Built different. Delivered with excellence."</div>
+  <a href="https://vcard.link/card/IRG2" target="_blank" class="btn-secondary" style="font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;padding:12px 28px;">📇 Save My Contact</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">KUMSKID WEB © 2026</div>
+  <div class="footer-copy">Emmanuel Olayinka Kumayon · Ogun State, Nigeria</div>
+  <a href="#hero" class="footer-back">↑ Back to Top</a>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.transform = `translate(${e.clientX - 5}px, ${e.clientY - 5}px)`;
+    ring.style.transform = `translate(${e.clientX - 18}px, ${e.clientY - 18}px)`;
+  });
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { ring.style.width = '56px'; ring.style.height = '56px'; ring.style.marginLeft = '-10px'; ring.style.marginTop = '-10px'; });
+    el.addEventListener('mouseleave', () => { ring.style.width = '36px'; ring.style.height = '36px'; ring.style.marginLeft = '0'; ring.style.marginTop = '0'; });
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // WhatsApp contact form
+  function sendWhatsApp() {
+    const name = document.querySelector('input[placeholder="Your name"]').value || 'N/A';
+    const phone = document.querySelector('input[placeholder="+234..."]').value || 'N/A';
+    const service = document.querySelectorAll('select')[0].value || 'Not selected';
+    const budget = document.querySelectorAll('select')[1].value || 'Not selected';
+    const message = document.querySelector('textarea').value || 'N/A';
+    const text = `Hello Emmanuel! I found you via your portfolio.\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Service:* ${service}\n*Budget:* ${budget}\n*Project:* ${message}`;
+    window.open(`https://wa.me/2348106875407?text=${encodeURIComponent(text)}`, '_blank');
+  }
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.background = window.scrollY > 80
+      ? 'rgba(8,8,8,0.97)'
+      : 'linear-gradient(to bottom, rgba(8,8,8,0.95), transparent)';
+  });
+</script>
+</body>
+</html>
