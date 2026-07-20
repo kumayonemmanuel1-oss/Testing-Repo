@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StrikeWave — Free music. No account. No wait.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- ============================================================
+     GOOGLE ADSENSE LOADER
+     Uncomment and drop in your publisher ID (ca-pub-XXXXXXXXXXXXXXXX)
+     once the AdSense account is approved. This one script goes in
+     <head> and covers every ad-slot div placed in the body below.
+============================================================ -->
+<!--
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+-->
+
+<style>
+  :root{
+    --void:#120A1C;
+    --void-2:#1D1030;
+    --void-3:#170D26;
+    --strike:#FF6B35;
+    --amber:#FFB627;
+    --magenta:#C81E78;
+    --bone:#F5EFE6;
+    --lilac:#9C8AA5;
+    --line: rgba(245,239,230,0.10);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--void);
+    color:var(--bone);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+    padding-bottom:92px;
+  }
+  ::selection{ background:var(--strike); color:var(--void);}
+  a{color:inherit; text-decoration:none;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .display{font-family:'Archivo Black',sans-serif; text-transform:uppercase;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 28px;
+    background:linear-gradient(to bottom, rgba(18,10,28,0.92), rgba(18,10,28,0));
+    backdrop-filter:blur(6px);
+  }
+  .logo{display:flex; align-items:center; gap:10px; font-size:20px; letter-spacing:0.5px;}
+  .logo-bars{display:flex; align-items:flex-end; gap:2px; height:18px;}
+  .logo-bars span{width:3px; background:var(--strike); border-radius:2px; animation:eq 1.1s ease-in-out infinite;}
+  .logo-bars span:nth-child(2){animation-delay:.15s; background:var(--amber);}
+  .logo-bars span:nth-child(3){animation-delay:.3s; background:var(--magenta);}
+  body:not(.playing) .logo-bars span{animation-play-state:paused; height:6px !important;}
+  .brand-logo{width:30px; height:30px; border-radius:8px; object-fit:cover; display:block;}
+  @keyframes eq{0%,100%{height:5px;} 50%{height:18px;}}
+  .navlinks{display:flex; gap:32px; font-size:14px; font-weight:600;}
+  .navlinks a{opacity:.75; transition:opacity .2s;}
+  .navlinks a:hover{opacity:1;}
+  .nav-cta{
+    background:var(--strike); color:var(--void); font-weight:800; font-size:13px;
+    padding:10px 20px; border-radius:100px; letter-spacing:.3px;
+    box-shadow:0 0 0 0 rgba(255,107,53,.5); transition:transform .15s;
+  }
+  .nav-cta:hover{transform:translateY(-1px);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; min-height:100vh; display:flex; flex-direction:column;
+    justify-content:center; padding:140px 0 80px; overflow:hidden;
+  }
+  .blob{position:absolute; border-radius:50%; filter:blur(90px); opacity:.55; z-index:0;}
+  .blob-1{width:520px; height:520px; background:var(--magenta); top:-160px; right:-120px; animation:float1 16s ease-in-out infinite;}
+  .blob-2{width:420px; height:420px; background:var(--strike); bottom:-140px; left:-100px; animation:float2 20s ease-in-out infinite;}
+  @keyframes float1{0%,100%{transform:translate(0,0);} 50%{transform:translate(-40px,50px);}}
+  @keyframes float2{0%,100%{transform:translate(0,0);} 50%{transform:translate(50px,-30px);}}
+
+  .eyebrow{
+    position:relative; z-index:1; font-size:13px; font-weight:700; letter-spacing:2px;
+    color:var(--amber); text-transform:uppercase; margin-bottom:18px;
+  }
+  .wrap.hero-inner{position:relative; z-index:1; display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:center;}
+  h1.hero-title{
+    font-size:clamp(40px, 6.4vw, 84px); line-height:0.96; letter-spacing:-1px;
+  }
+  h1.hero-title .accent{color:var(--strike); -webkit-text-stroke:0; }
+  .hero-sub{
+    margin-top:24px; font-size:17px; line-height:1.6; color:var(--lilac); max-width:460px;
+  }
+  .hero-actions{display:flex; gap:14px; margin-top:34px; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--strike); color:var(--void); font-weight:800; font-size:15px;
+    padding:16px 30px; border-radius:100px; border:none; cursor:pointer;
+    display:inline-flex; align-items:center; gap:10px; transition:transform .15s, box-shadow .2s;
+  }
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 30px -8px rgba(255,107,53,.6);}
+  .btn-ghost{
+    border:1px solid var(--line); color:var(--bone); font-weight:600; font-size:15px;
+    padding:16px 26px; border-radius:100px; background:transparent; cursor:pointer;
+  }
+  .btn-ghost:hover{border-color:var(--strike);}
+
+  /* hero visual: waveform disc */
+  .hero-visual{position:relative; display:flex; align-items:center; justify-content:center;}
+  .disc{
+    position:relative; width:100%; max-width:360px; aspect-ratio:1; border-radius:50%;
+    background:conic-gradient(from 220deg, var(--magenta), var(--strike), var(--amber), var(--magenta));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 30px 80px -20px rgba(200,30,120,.45);
+  }
+  .disc::before{
+    content:""; position:absolute; inset:14px; border-radius:50%; background:var(--void);
+  }
+  .disc-inner{position:relative; z-index:1; text-align:center;}
+  .disc-play{
+    width:74px; height:74px; border-radius:50%; background:var(--bone); border:none; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; margin:0 auto 14px; transition:transform .15s;
+  }
+  .disc-play:hover{transform:scale(1.06);}
+  .disc-play svg{width:26px; height:26px; fill:var(--void);}
+  .disc-label{font-size:11px; color:var(--lilac); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:4px;}
+  .disc-track{font-weight:700; font-size:15px;}
+  .disc-artist{font-size:12px; color:var(--lilac); margin-top:2px;}
+  .wave-ring{position:absolute; inset:-18px; display:flex; align-items:center; justify-content:center; pointer-events:none;}
+  .wave-ring span{
+    position:absolute; width:100%; height:100%; border-radius:50%; border:1px solid rgba(255,182,39,.35);
+    animation:ring 3s ease-out infinite;
+  }
+  .wave-ring span:nth-child(2){animation-delay:1s;}
+  .wave-ring span:nth-child(3){animation-delay:2s;}
+  @keyframes ring{0%{transform:scale(.85); opacity:0;} 30%{opacity:1;} 100%{transform:scale(1.25); opacity:0;}}
+
+  /* ---------- ARTIST SPOTLIGHT ---------- */
+  .spotlight-card{
+    display:flex; align-items:center; gap:32px; background:var(--void-2);
+    border:1px solid var(--line); border-radius:20px; padding:36px;
+  }
+  .spotlight-photo{
+    width:120px; height:120px; border-radius:16px; flex-shrink:0; overflow:hidden;
+    background:linear-gradient(160deg,#1D1030,#FFB627);
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line);
+  }
+  .spotlight-photo img{width:100%; height:100%; object-fit:cover; display:block;}
+  .spotlight-photo .placeholder-label{font-size:10px; color:var(--lilac); text-align:center; padding:0 10px; opacity:.7;}
+  .spotlight-badge{
+    display:inline-block; font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase;
+    color:var(--void); background:var(--amber); padding:3px 10px; border-radius:20px; margin-bottom:10px;
+  }
+  .spotlight-name{font-family:'Archivo Black',sans-serif; text-transform:uppercase; font-size:24px; letter-spacing:-.3px; margin-bottom:4px;}
+  .spotlight-meta{color:var(--lilac); font-size:13px; margin-bottom:16px;}
+  .spotlight-btn{
+    display:inline-flex; align-items:center; gap:8px; background:var(--strike); color:var(--void);
+    font-weight:700; font-size:14px; padding:10px 20px; border-radius:30px; border:none; cursor:pointer;
+  }
+  @media(max-width:700px){
+    .spotlight-card{flex-direction:column; text-align:center; padding:28px 22px;}
+  }
+
+  /* ---------- FOUNDER / ABOUT ---------- */
+  .founder-section{padding:70px 0;}
+  .founder-card{
+    display:flex; align-items:center; gap:40px; background:var(--void-2);
+    border:1px solid var(--line); border-radius:20px; padding:40px;
+  }
+  .founder-photo{
+    width:160px; height:160px; border-radius:50%; flex-shrink:0; overflow:hidden;
+    background:linear-gradient(160deg,#1D1030,#C81E78);
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line);
+  }
+  .founder-photo img{width:100%; height:100%; object-fit:cover; display:block;}
+  .founder-photo .placeholder-label{font-size:11px; color:var(--lilac); text-align:center; padding:0 14px; opacity:.7;}
+  .founder-name{font-family:'Archivo Black',sans-serif; text-transform:uppercase; font-size:22px; letter-spacing:-.3px; margin-bottom:4px;}
+  .founder-role{color:var(--strike); font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:14px;}
+  .founder-bio{color:var(--lilac); font-size:14px; line-height:1.7;}
+
+  @media(max-width:700px){
+    .founder-card{flex-direction:column; text-align:center; padding:32px 24px;}
+  }
+
+  /* ---------- SECTION HEADS ---------- */
+  .section{padding:90px 0;}
+  .section-head{display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:36px; gap:20px; flex-wrap:wrap;}
+  .section-tag{font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--strike); margin-bottom:8px;}
+  .section-title{font-size:clamp(26px,3.4vw,38px); font-family:'Archivo Black',sans-serif; text-transform:uppercase; letter-spacing:-.5px;}
+  .section-note{color:var(--lilac); font-size:14px; max-width:340px; text-align:right;}
+
+  /* ---------- GENRE PILLS ---------- */
+  .pills{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:44px;}
+  .pill{
+    padding:9px 18px; border-radius:100px; border:1px solid var(--line); font-size:13px; font-weight:600;
+    cursor:pointer; background:transparent; color:var(--bone); transition:all .18s;
+  }
+  .pill.active, .pill:hover{background:var(--bone); color:var(--void); border-color:var(--bone);}
+
+  /* ---------- TRACK GRID ---------- */
+  .tracks{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
+  .track-card{
+    background:var(--void-2); border:1px solid var(--line); border-radius:16px; padding:16px;
+    cursor:pointer; transition:transform .18s, border-color .18s; position:relative;
+  }
+  .track-card:hover{transform:translateY(-4px); border-color:var(--strike);}
+  .track-card.active{border-color:var(--amber);}
+  .art{
+    width:100%; aspect-ratio:1; border-radius:10px; margin-bottom:14px; position:relative; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .art-play{
+    width:44px; height:44px; border-radius:50%; background:rgba(245,239,230,.92); border:none;
+    display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(.8); transition:all .18s;
+  }
+  .track-card:hover .art-play, .track-card.active .art-play{opacity:1; transform:scale(1);}
+  .art-play svg{width:16px; height:16px; fill:var(--void);}
+  .art-play.pause svg{width:14px; height:14px;}
+  .track-title{font-weight:700; font-size:15px; margin-bottom:3px;}
+  .track-artist{font-size:13px; color:var(--lilac);}
+  .track-genre{
+    position:absolute; top:26px; left:26px; font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    background:rgba(18,10,28,.55); padding:4px 9px; border-radius:100px; backdrop-filter:blur(3px);
+  }
+
+  /* ---------- PLAYLISTS ---------- */
+  .playlists{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
+  .pl-card{border-radius:16px; padding:22px; min-height:190px; display:flex; flex-direction:column; justify-content:flex-end; position:relative; overflow:hidden;}
+  .pl-card::after{content:""; position:absolute; inset:0; background:rgba(18,10,28,.15);}
+  .pl-title{position:relative; z-index:1; font-family:'Archivo Black',sans-serif; text-transform:uppercase; font-size:19px; line-height:1.15;}
+  .pl-count{position:relative; z-index:1; font-size:12px; margin-top:6px; opacity:.85;}
+
+  /* ---------- FREE / ADS ---------- */
+  .free-section{
+    background:var(--void-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .free-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:36px;}
+  .free-item h3{font-size:17px; margin-bottom:10px;}
+  .free-item p{font-size:14px; color:var(--lilac); line-height:1.65;}
+  .free-num{font-family:'JetBrains Mono',monospace; color:var(--amber); font-size:13px; margin-bottom:10px; display:block;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:70px 0 40px;}
+  .foot-top{display:flex; justify-content:space-between; gap:40px; flex-wrap:wrap; padding-bottom:40px; border-bottom:1px solid var(--line);}
+  .foot-tagline{max-width:340px; color:var(--lilac); font-size:14px; margin-top:14px; line-height:1.6;}
+  .foot-cols{display:flex; gap:64px; flex-wrap:wrap;}
+  .foot-col h4{font-size:12px; text-transform:uppercase; letter-spacing:1.5px; color:var(--lilac); margin-bottom:14px;}
+  .foot-col a, .foot-col span{display:block; font-size:14px; margin-bottom:10px; color:var(--bone); opacity:.85;}
+  .foot-col a:hover{opacity:1; color:var(--strike);}
+  .foot-bottom{display:flex; justify-content:space-between; padding-top:26px; font-size:12px; color:var(--lilac); flex-wrap:wrap; gap:10px;}
+
+  /* ---------- AD SLOTS ----------
+     Reserved containers for Google AdSense / AdMob banners.
+     min-height is set per size so the page doesn't jump (layout shift)
+     once a real ad loads in. These sit in the normal page flow only —
+     never inside .player or near any play/pause button — so an ad
+     can never overlap or block a control.
+  */
+  .ad-slot{
+    position:relative; width:100%; margin:0 auto;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--void-2); border:1px dashed var(--line); border-radius:12px;
+    overflow:hidden;
+  }
+  .ad-slot .ad-label{
+    position:absolute; top:8px; left:50%; transform:translateX(-50%);
+    font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--lilac); opacity:.6;
+  }
+  .ad-slot .ad-placeholder-text{ font-size:12px; color:var(--lilac); opacity:.5; }
+
+  /* Leaderboard, under the nav / above the hero */
+  #ad-slot-top{ max-width:1180px; min-height:90px; margin:84px auto 0; }
+
+  /* In-feed / native, between Trending and Playlists */
+  #ad-slot-infeed{ max-width:1180px; min-height:120px; }
+
+  /* Rectangle, between "Why free" and the footer */
+  #ad-slot-footer{ max-width:1180px; min-height:250px; }
+
+  @media(max-width:600px){
+    #ad-slot-top{ min-height:60px; margin-top:74px; }
+    #ad-slot-infeed{ min-height:100px; }
+    #ad-slot-footer{ min-height:200px; }
+  }
+
+  /* ---------- PLAYER BAR ---------- */
+  .player{
+    position:fixed; left:0; right:0; bottom:0; z-index:200;
+    background:rgba(18,10,28,.88); backdrop-filter:blur(14px); border-top:1px solid var(--line);
+    transform:translateY(100%); transition:transform .35s ease;
+  }
+  body.playing .player, body.has-played .player{transform:translateY(0);}
+  .player-inner{
+    max-width:1180px; margin:0 auto; padding:12px 28px; display:grid; grid-template-columns:1fr 2fr 1fr; align-items:center; gap:20px;
+  }
+  .now{display:flex; align-items:center; gap:12px; min-width:0;}
+  .now-art{width:44px; height:44px; border-radius:8px; flex-shrink:0;}
+  .now-text{min-width:0;}
+  .now-title{font-size:13px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .now-artist{font-size:12px; color:var(--lilac); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .p-controls{display:flex; flex-direction:column; align-items:center; gap:6px;}
+  .p-buttons{display:flex; align-items:center; gap:18px;}
+  .p-btn{background:none; border:none; cursor:pointer; color:var(--bone); opacity:.8; transition:opacity .15s;}
+  .p-btn:hover{opacity:1;}
+  .p-btn svg{width:16px; height:16px; fill:currentColor;}
+  .p-play{
+    width:34px; height:34px; border-radius:50%; background:var(--bone); display:flex; align-items:center; justify-content:center; opacity:1;
+  }
+  .p-play svg{fill:var(--void); width:14px; height:14px;}
+  .p-progress{display:flex; align-items:center; gap:8px; width:100%; max-width:420px;}
+  .p-time{font-size:11px; color:var(--lilac); font-family:'JetBrains Mono',monospace; width:34px;}
+  .bar{flex:1; height:4px; background:rgba(245,239,230,.15); border-radius:100px; cursor:pointer; position:relative;}
+  .bar-fill{height:100%; width:0%; background:var(--strike); border-radius:100px;}
+  .p-right{display:flex; align-items:center; justify-content:flex-end; gap:14px;}
+  .eq-mini{display:flex; align-items:flex-end; gap:2px; height:16px;}
+  .eq-mini span{width:3px; background:var(--amber); border-radius:2px; height:4px; animation:eq 1s ease-in-out infinite;}
+  .eq-mini span:nth-child(2){animation-delay:.15s;}
+  .eq-mini span:nth-child(3){animation-delay:.3s;}
+  body:not(.playing) .eq-mini span{animation-play-state:paused; height:3px !important;}
+  .vol{width:80px; height:4px; accent-color:var(--strike);}
+
+  @media(max-width:920px){
+    .hero-inner{grid-template-columns:1fr;}
+    .hero-visual{order:-1; max-width:260px; margin:0 auto;}
+    .tracks{grid-template-columns:repeat(2,1fr);}
+    .playlists{grid-template-columns:repeat(2,1fr);}
+    .free-grid{grid-template-columns:1fr;}
+    .navlinks{display:none;}
+    .player-inner{grid-template-columns:auto 1fr auto; gap:10px; padding:10px 16px;}
+    .p-progress{max-width:none;}
+    .now-text{display:none;}
+    .foot-cols{gap:36px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <img class="brand-logo" src="https://res.cloudinary.com/dnx2afsnl/image/upload/v1784529291/file_00000000d64081f485a6bb1b0705f501_z1wcm2.png" alt="StrikeWave">
+    <span class="display" style="font-size:18px;">StrikeWave</span>
+  </div>
+  <div class="navlinks">
+    <a href="#trending">Trending</a>
+    <a href="#playlists">Playlists</a>
+    <a href="#free">Why free</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#trending" class="nav-cta">Start listening</a>
+</nav>
+
+<!-- AD SLOT: top leaderboard (e.g. AdSense 728x90 / responsive). Sits above
+     the hero, well clear of the disc play button and the bottom player. -->
+<div id="ad-slot-top" class="ad-slot" data-ad-type="leaderboard">
+  <span class="ad-label">Advertisement</span>
+  <span class="ad-placeholder-text">Ad space — 728×90 / responsive banner</span>
+  <!-- Paste your <ins class="adsbygoogle">...</ins> tag + <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script> here -->
+</div>
+
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="wrap hero-inner">
+    <div>
+      <div class="eyebrow">100% free · no sign-up</div>
+      <h1 class="hero-title">Press play.<br>That's <span class="accent">it.</span></h1>
+      <p class="hero-sub">Afrobeats, Hip-Hop, Gospel, tributes honoring the fallen and those who serve — one platform, every sound. Press play and StrikeWave does the rest, free for everyone.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="playTrack(0)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#120A1C"><path d="M8 5v14l11-7z"/></svg>
+          Play something now
+        </button>
+        <a href="#playlists" class="btn-ghost">Browse playlists</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="wave-ring"><span></span><span></span><span></span></div>
+      <div class="disc">
+        <div class="disc-inner">
+          <button class="disc-play" id="discPlayBtn" onclick="togglePlayFromDisc()">
+            <svg id="discIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <div class="disc-label">Trending now</div>
+          <div class="disc-track" id="discTrack">Salute the Fallen Hero</div>
+          <div class="disc-artist" id="discArtist">Unknown Artist</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="trending">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-tag">On repeat</div>
+        <div class="section-title">Trending tracks</div>
+      </div>
+      <div class="section-note">Tap any cover to start it in the player at the bottom of the screen.</div>
+    </div>
+    <div class="pills" id="genrePills"></div>
+    <div class="tracks" id="trackGrid"></div>
+  </div>
+</section>
+
+<!-- AD SLOT: in-feed / native, between Trending and Playlists. Lives in
+     normal document flow, not fixed, so it can never sit on top of a
+     track card's play button or the sticky player controls below. -->
+<section class="wrap" style="padding:0 28px;">
+  <div id="ad-slot-infeed" class="ad-slot" data-ad-type="in-feed">
+    <span class="ad-label">Advertisement</span>
+    <span class="ad-placeholder-text">Ad space — in-feed / native unit</span>
+    <!-- Paste your <ins class="adsbygoogle">...</ins> tag + <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script> here -->
+  </div>
+</section>
+
+<!-- ARTIST SPOTLIGHT — replace the placeholder photo below with
+     <img src="YOUR_LOGO_URL" alt="Lyrics King Official"> once the
+     logo is hosted somewhere with a public URL (e.g. Cloudinary). -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-tag">Artist Spotlight</div>
+        <div class="section-title">Lyrics King Official</div>
+      </div>
+    </div>
+    <div class="spotlight-card">
+      <div class="spotlight-photo" id="spotlightPhoto">
+        <img src="https://res.cloudinary.com/dnx2afsnl/image/upload/v1784529346/WA_1776762818879_ao2gil.png" alt="Lyrics King Official">
+      </div>
+      <div>
+        <div class="spotlight-badge">Featured Artist</div>
+        <div class="spotlight-name">Lyrics King Official</div>
+        <div class="spotlight-meta">5 tracks streaming now · Afrobeats</div>
+        <button class="spotlight-btn" onclick="playFirstByArtist('Lyrics King Official')">▶ Play catalog</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="playlists">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-tag">Curated</div>
+        <div class="section-title">Playlists for every mood</div>
+      </div>
+    </div>
+    <div class="playlists">
+      <div class="pl-card" style="background:linear-gradient(160deg,#C81E78,#FF6B35);">
+        <div class="pl-title">Afrobeats Now</div>
+        <div class="pl-count">42 tracks</div>
+      </div>
+      <div class="pl-card" style="background:linear-gradient(160deg,#1D1030,#C81E78);">
+        <div class="pl-title">Chill After Dark</div>
+        <div class="pl-count">31 tracks</div>
+      </div>
+      <div class="pl-card" style="background:linear-gradient(160deg,#FFB627,#FF6B35);">
+        <div class="pl-title">Gym Starter Pack</div>
+        <div class="pl-count">28 tracks</div>
+      </div>
+      <div class="pl-card" style="background:linear-gradient(160deg,#1D1030,#3a1f52);">
+        <div class="pl-title">Sunday Service</div>
+        <div class="pl-count">19 tracks</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section free-section" id="free">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-tag">The honest bit</div>
+        <div class="section-title">Free, and it stays that way</div>
+      </div>
+    </div>
+    <div class="free-grid">
+      <div class="free-item">
+        <span class="free-num">No account</span>
+        <h3>Nothing to sign up for</h3>
+        <p>There's no login, no password, no email wall between you and a song. Land on the page, hit play.</p>
+      </div>
+      <div class="free-item">
+        <span class="free-num">Ad-supported</span>
+        <h3>Short ads keep the lights on</h3>
+        <p>StrikeWave runs on ads, not subscriptions. Every so often you'll hear or see one — it's what pays for the streaming, not your card details.</p>
+      </div>
+      <div class="free-item">
+        <span class="free-num">Always on</span>
+        <h3>Come back anytime</h3>
+        <p>No listening limits, no locked tracks. The same catalog is open whether it's your first visit or your hundredth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OWNER / FOUNDER BIO — replace the placeholder photo div below with
+     <img src="YOUR_IMAGE_URL" alt="Founder name"> and swap the bio text
+     once you have the real photo + write-up. -->
+<section class="section founder-section" id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-tag">Behind StrikeWave</div>
+        <div class="section-title">The founder</div>
+      </div>
+    </div>
+    <div class="founder-card">
+      <div class="founder-photo" id="founderPhoto">
+        <img src="https://res.cloudinary.com/dnx2afsnl/image/upload/v1784529984/IMG-20260720-WA0006_crkmou.jpg" alt="Amusan Olamilekan">
+      </div>
+      <div>
+        <div class="founder-name" id="founderName">Amusan Olamilekan</div>
+        <div class="founder-role" id="founderRole">Founder, StrikeWave</div>
+        <p class="founder-bio" id="founderBio">Amusan Olamilekan is the founder and driving force behind StrikeWave — a platform built to give voice to the sounds that move people, and to honor those who serve with quiet courage. Born and raised in Ogun State, Nigeria, he carries forward values of discipline, loyalty, and respect into everything StrikeWave stands for. His vision was simple: build a space where music tells the full story — the rhythm of everyday life alongside the tribute owed to the fallen and the brave. StrikeWave exists because he believed no one should have to pay, sign up, or wait to press play.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AD SLOT: medium rectangle, between "Why it's free" and the footer. -->
+<section class="wrap" style="padding:44px 28px 0;">
+  <div id="ad-slot-footer" class="ad-slot" data-ad-type="rectangle">
+    <span class="ad-label">Advertisement</span>
+    <span class="ad-placeholder-text">Ad space — 300×250 rectangle</span>
+    <!-- Paste your <ins class="adsbygoogle">...</ins> tag + <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script> here -->
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="logo">
+          <img class="brand-logo" src="https://res.cloudinary.com/dnx2afsnl/image/upload/v1784529291/file_00000000d64081f485a6bb1b0705f501_z1wcm2.png" alt="StrikeWave">
+          <span class="display" style="font-size:18px;">StrikeWave</span>
+        </div>
+        <p class="foot-tagline">Free music, no account required. Built for people who just want to press play.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Contact</h4>
+          <a href="mailto:olamilekanamusan498@gmail.com">olamilekanamusan498@gmail.com</a>
+          <a href="tel:+2349014118507">+234 901 411 8507</a>
+        </div>
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="#trending">Trending</a>
+          <a href="#playlists">Playlists</a>
+          <a href="#free">Why it's free</a>
+          <a href="#about">About</a>
+          <a href="/privacy.html">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 StrikeWave. All tracks used are placeholder demo audio.</span>
+      <span>Made to be pressed play on.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="player">
+  <div class="player-inner">
+    <div class="now">
+      <div class="now-art" id="nowArt" style="background:linear-gradient(160deg,#1D1030,#C81E78);"></div>
+      <div class="now-text">
+        <div class="now-title" id="nowTitle">Salute the Fallen Hero</div>
+        <div class="now-artist" id="nowArtist">Unknown Artist</div>
+      </div>
+    </div>
+    <div class="p-controls">
+      <div class="p-buttons">
+        <button class="p-btn" onclick="prevTrack()" aria-label="Previous">
+          <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+        </button>
+        <button class="p-btn p-play" id="playBtn" onclick="togglePlay()" aria-label="Play or pause">
+          <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="p-btn" onclick="nextTrack()" aria-label="Next">
+          <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 6l8.5 6L6 18z"/></svg>
+        </button>
+      </div>
+      <div class="p-progress">
+        <span class="p-time mono" id="curTime">0:00</span>
+        <div class="bar" id="seekBar" onclick="seek(event)"><div class="bar-fill" id="barFill"></div></div>
+        <span class="p-time mono" id="durTime">0:00</span>
+      </div>
+    </div>
+    <div class="p-right">
+      <div class="eq-mini"><span></span><span></span><span></span></div>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="#9C8AA5"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1-3.29-2.5-4.03v8.05c1.5-.73 2.5-2.25 2.5-4.02z"/></svg>
+      <input type="range" class="vol" id="volSlider" min="0" max="1" step="0.01" value="0.8" oninput="setVolume(this.value)">
+    </div>
+  </div>
+</div>
+
+<audio id="audio"></audio>
+
+<script>
+  const tracks = [
+    { title:"Salute the Fallen Hero", artist:"Unknown Artist", genre:"Mora Tribute", src:"https://res.cloudinary.com/dnx2afsnl/video/upload/v1784494218/Salute_the_Fallen_Hero_ohome3.mp3", grad:"linear-gradient(160deg,#1D1030,#C81E78)" },
+    { title:"Only You", artist:"Lyrics King Official", genre:"Afrobeats", src:"https://res.cloudinary.com/dnx2afsnl/video/upload/q_auto/f_auto/v1778854058/Title__Only_You_h8nkdj.mp3", grad:"linear-gradient(160deg,#C81E78,#FF6B35)" },
+    { title:"Na We Be The Light", artist:"Lyrics King Official", genre:"Afrobeats", src:"https://res.cloudinary.com/dnx2afsnl/video/upload/q_auto/f_auto/v1778853517/na-we-be-the-light-_oeffpr.mp3", grad:"linear-gradient(160deg,#FFB627,#C81E78)" },
+    { title:"Still We Rise", artist:"Lyrics King Official", genre:"Afrobeats", src:"https://res.cloudinary.com/dnx2afsnl/video/upload/q_auto/f_auto/v1778867962/Still_we_rise_rdbwck.mp3", grad:"linear-gradient(160deg,#1D1030,#FF6B35)" },
+    { title:"No Gree For Anybody", artist:"Lyrics King Official", genre:"Afrobeats", src:"https://res.cloudinary.com/dnx2afsnl/video/upload/q_auto/f_auto/v1778867893/no-gree-for-anybody-_1_urfels.mp3", grad:"linear-gradient(160deg,#FF6B35,#FFB627)" },
+    { title:"All Year Love", artist:"Lyrics King Official", genre:"Afrobeats", src:"https://res.cloudinary.com/dnx2afsnl/video/upload/q_auto/f_auto/v1778868166/ALL_YEAR_LOVE_x2pzia.mp3", grad:"linear-gradient(160deg,#C81E78,#1D1030)" },
+    { title:"Sunday Praise", artist:"The Zion Sound", genre:"Gospel", src:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3", grad:"linear-gradient(160deg,#3a1f52,#1D1030)" },
+    { title:"City Flow", artist:"Deji Cole", genre:"Hip-Hop", src:"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3", grad:"linear-gradient(160deg,#120A1C,#C81E78)" }
+  ];
+
+  const audio = document.getElementById('audio');
+  let currentIndex = 0;
+  let currentGenre = 'All';
+
+  function playIconSvg(){ return '<path d="M8 5v14l11-7z"/>'; }
+  function pauseIconSvg(){ return '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>'; }
+
+  function renderPills(){
+    const genres = ['All', ...new Set(tracks.map(t => t.genre))];
+    const el = document.getElementById('genrePills');
+    el.innerHTML = genres.map(g =>
+      `<button class="pill ${g==='All' ? 'active' : ''}" data-genre="${g}" onclick="filterGenre('${g}')">${g}</button>`
+    ).join('');
+  }
+
+  function filterGenre(g){
+    currentGenre = g;
+    document.querySelectorAll('.pill').forEach(p => p.classList.toggle('active', p.dataset.genre === g));
+    renderTracks();
+  }
+
+  function renderTracks(){
+    const grid = document.getElementById('trackGrid');
+    const list = currentGenre === 'All' ? tracks : tracks.filter(t => t.genre === currentGenre);
+    grid.innerHTML = list.map((t) => {
+      const realIndex = tracks.indexOf(t);
+      const isActive = realIndex === currentIndex;
+      return `
+      <div class="track-card ${isActive ? 'active':''}" onclick="playTrack(${realIndex})">
+        <div class="art" style="background:${t.grad}">
+          <span class="track-genre">${t.genre}</span>
+          <button class="art-play ${isActive ? 'pause':''}" aria-label="Play">
+            <svg viewBox="0 0 24 24">${isActive && !audio.paused ? pauseIconSvg() : playIconSvg()}</svg>
+          </button>
+        </div>
+        <div class="track-title">${t.title}</div>
+        <div class="track-artist">${t.artist}</div>
+      </div>`;
+    }).join('');
+  }
+
+  function loadTrack(i){
+    currentIndex = i;
+    const t = tracks[i];
+    audio.src = t.src;
+    document.getElementById('nowTitle').textContent = t.title;
+    document.getElementById('nowArtist').textContent = t.artist;
+    document.getElementById('nowArt').style.background = t.grad;
+    document.getElementById('discTrack').textContent = t.title;
+    document.getElementById('discArtist').textContent = t.artist;
+    renderTracks();
+    updateMediaSessionMetadata(t);
+  }
+
+  function playTrack(i){
+    loadTrack(i);
+    audio.play();
+    document.body.classList.add('has-played');
+  }
+
+  function togglePlay(){
+    if(audio.paused){ audio.play(); } else { audio.pause(); }
+  }
+
+  function togglePlayFromDisc(){
+    if(!audio.src){ playTrack(currentIndex); return; }
+    togglePlay();
+    document.body.classList.add('has-played');
+  }
+
+  function nextTrack(){ playTrack((currentIndex + 1) % tracks.length); }
+  function prevTrack(){ playTrack((currentIndex - 1 + tracks.length) % tracks.length); }
+
+  function playFirstByArtist(artistName){
+    const i = tracks.findIndex(t => t.artist === artistName);
+    if(i !== -1) playTrack(i);
+  }
+
+  /* ---------- MEDIA SESSION (OS notification / lock-screen player) ----------
+     This is what makes prev/next/play/pause show up in the Android/iOS
+     notification shade and lock screen, the same way apps like Audiomack do.
+     It has nothing to do with the in-page buttons — it's a separate hook
+     the browser exposes to the OS.
+  */
+  const artworkCache = {};
+  function artworkForTrack(t){
+    // Use a real cover image if the track has one (t.cover)
+    if(t.cover) return t.cover;
+    // Otherwise synthesize artwork from the card's gradient so the
+    // notification still shows something on-brand instead of a blank tile.
+    if(artworkCache[t.grad]) return artworkCache[t.grad];
+    const hexes = t.grad.match(/#([0-9a-fA-F]{6})/g) || ['#1D1030','#C81E78'];
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="${hexes[0]}"/>
+        <stop offset="100%" stop-color="${hexes[hexes.length-1]}"/>
+      </linearGradient></defs>
+      <rect width="512" height="512" fill="url(#g)"/>
+    </svg>`;
+    const uri = 'data:image/svg+xml;base64,' + btoa(svg);
+    artworkCache[t.grad] = uri;
+    return uri;
+  }
+
+  function updateMediaSessionMetadata(t){
+    if(!('mediaSession' in navigator)) return;
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: t.title,
+      artist: t.artist,
+      album: 'StrikeWave',
+      artwork: [
+        { src: artworkForTrack(t), sizes: '512x512', type: t.cover ? undefined : 'image/svg+xml' }
+      ]
+    });
+  }
+
+  if('mediaSession' in navigator){
+    navigator.mediaSession.setActionHandler('play', () => { audio.play(); });
+    navigator.mediaSession.setActionHandler('pause', () => { audio.pause(); });
+    navigator.mediaSession.setActionHandler('previoustrack', () => { prevTrack(); });
+    navigator.mediaSession.setActionHandler('nexttrack', () => { nextTrack(); });
+    navigator.mediaSession.setActionHandler('seekto', (details) => {
+      if(details.seekTime !== undefined && audio.duration) audio.currentTime = details.seekTime;
+    });
+    navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+      audio.currentTime = Math.max(audio.currentTime - (details.seekOffset || 10), 0);
+    });
+    navigator.mediaSession.setActionHandler('seekforward', (details) => {
+      audio.currentTime = Math.min(audio.currentTime + (details.seekOffset || 10), audio.duration || Infinity);
+    });
+  }
+
+  audio.addEventListener('play', () => {
+    document.body.classList.add('playing');
+    document.getElementById('playIcon').innerHTML = pauseIconSvg();
+    document.getElementById('discIcon').innerHTML = pauseIconSvg();
+    renderTracks();
+    if('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
+  });
+  audio.addEventListener('pause', () => {
+    document.body.classList.remove('playing');
+    document.getElementById('playIcon').innerHTML = playIconSvg();
+    document.getElementById('discIcon').innerHTML = playIconSvg();
+    renderTracks();
+    if('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
+  });
+  audio.addEventListener('ended', nextTrack);
+
+  audio.addEventListener('timeupdate', () => {
+    if(!audio.duration) return;
+    const pct = (audio.currentTime / audio.duration) * 100;
+    document.getElementById('barFill').style.width = pct + '%';
+    document.getElementById('curTime').textContent = formatTime(audio.currentTime);
+    // Keeps the lock-screen scrub bar in sync with actual playback position
+    if('mediaSession' in navigator && 'setPositionState' in navigator.mediaSession){
+      try{
+        navigator.mediaSession.setPositionState({
+          duration: audio.duration,
+          playbackRate: audio.playbackRate,
+          position: audio.currentTime
+        });
+      }catch(e){ /* duration can be momentarily invalid right after a track switch */ }
+    }
+  });
+  audio.addEventListener('loadedmetadata', () => {
+    document.getElementById('durTime').textContent = formatTime(audio.duration);
+  });
+
+  function formatTime(s){
+    if(isNaN(s)) return '0:00';
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60).toString().padStart(2,'0');
+    return `${m}:${sec}`;
+  }
+
+  function seek(e){
+    const bar = document.getElementById('seekBar');
+    const rect = bar.getBoundingClientRect();
+    const pct = (e.clientX - rect.left) / rect.width;
+    if(audio.duration) audio.currentTime = pct * audio.duration;
+  }
+
+  function setVolume(v){ audio.volume = v; }
+  audio.volume = 0.8;
+
+  renderPills();
+  renderTracks();
+</script>
+
+</body>
+</html>
