@@ -1,0 +1,15 @@
+# StrikeWave — robots.txt
+# Allow all legitimate crawlers, including Google Search and Google AdSense review bots.
+
+User-agent: *
+Allow: /
+
+# Explicitly allow Google's ad-quality/review crawler
+User-agent: Mediapartners-Google
+Allow: /
+
+# Explicitly allow Googlebot (search + AdSense site review)
+User-agent: Googlebot
+Allow: /
+
+Sitemap: https://testing-repo.pages.dev/sitemap.xml
