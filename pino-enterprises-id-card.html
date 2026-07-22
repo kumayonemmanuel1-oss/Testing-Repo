@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pino Enterprises — Staff ID Card</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root{
+    --navy:#0B1F4E;
+    --navy-deep:#081638;
+    --gold:#F2B12E;
+    --gold-soft:#F7CB6E;
+    --ink:#0B1F4E;
+    --paper:#FFFFFF;
+    --line:rgba(255,255,255,0.18);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  body{
+    background:#EDEEF2;
+    font-family:'Archivo', sans-serif;
+    padding:48px 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:36px;
+  }
+
+  .toolbar{
+    max-width:680px;
+    text-align:center;
+    color:#33384a;
+    font-size:13px;
+    line-height:1.6;
+  }
+  .toolbar b{ color:var(--navy); }
+
+  .stage{
+    display:flex;
+    flex-wrap:wrap;
+    gap:40px;
+    justify-content:center;
+  }
+
+  /* CR80 card size: 3.375in x 2.125in @ 300dpi = 1012.5 x 637.5px. We use 96dpi CSS-inch equivalent scaled up x2 for on-screen crispness: 3.375in x 2.125in in real inches via 'in' units */
+  .card{
+    width:3.375in;
+    height:2.125in;
+    border-radius:0.14in;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 18px 40px -12px rgba(8,22,56,0.35), 0 2px 8px rgba(8,22,56,0.15);
+  }
+
+  /* ===== FRONT ===== */
+  .front{
+    background: var(--navy);
+    color:#fff;
+  }
+
+  .front::before{
+    /* circuit motif, echoing the P mark, bottom-left */
+    content:"";
+    position:absolute;
+    left:-14px; bottom:-14px;
+    width:110px; height:110px;
+    background-image:
+      radial-gradient(circle at 30% 70%, var(--gold) 2.5px, transparent 2.5px),
+      radial-gradient(circle at 30% 45%, var(--gold) 2.5px, transparent 2.5px),
+      radial-gradient(circle at 55% 25%, var(--gold) 2.5px, transparent 2.5px);
+    opacity:0.35;
+  }
+
+  .front::after{
+    content:"";
+    position:absolute;
+    left:0; top:0; right:0;
+    height:6px;
+    background:linear-gradient(90deg, var(--gold), var(--gold-soft));
+  }
+
+  .front-top{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:16px 16px 0 16px;
+  }
+
+  .logo-mark{
+    width:34px; height:34px;
+    object-fit:contain;
+    background:#fff;
+    border-radius:6px;
+    padding:3px;
+  }
+
+  .brandblock{ line-height:1.05; }
+  .brandblock .co{
+    font-family:'Archivo Black', sans-serif;
+    font-size:13.5px;
+    letter-spacing:0.5px;
+  }
+  .brandblock .sub{
+    font-size:6.3px;
+    letter-spacing:1.4px;
+    color:var(--gold-soft);
+    text-transform:uppercase;
+    margin-top:2px;
+  }
+
+  .idtag{
+    margin-left:auto;
+    font-family:'Space Mono', monospace;
+    font-size:7px;
+    letter-spacing:1px;
+    color:rgba(255,255,255,0.55);
+    text-align:right;
+  }
+
+  .front-main{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 16px 0 16px;
+  }
+
+  .photo-slot{
+    width:64px; height:64px;
+    border-radius:50%;
+    background:linear-gradient(145deg, var(--gold-soft), var(--gold));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    border:2px solid rgba(255,255,255,0.85);
+  }
+  .photo-slot span{
+    font-family:'Archivo Black', sans-serif;
+    font-size:22px;
+    color:var(--navy-deep);
+  }
+
+  .who .name{
+    font-family:'Archivo Black', sans-serif;
+    font-size:16px;
+    letter-spacing:0.3px;
+    line-height:1.05;
+  }
+  .who .role{
+    margin-top:5px;
+    display:inline-block;
+    font-size:8px;
+    font-weight:700;
+    letter-spacing:1.6px;
+    text-transform:uppercase;
+    color:var(--navy-deep);
+    background:var(--gold);
+    padding:3px 8px;
+    border-radius:3px;
+  }
+  .who .realname{
+    margin-top:6px;
+    font-size:7.5px;
+    color:rgba(255,255,255,0.6);
+    letter-spacing:0.3px;
+  }
+
+  .front-foot{
+    position:absolute;
+    left:16px; right:16px; bottom:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    font-size:6.8px;
+    color:rgba(255,255,255,0.65);
+    letter-spacing:0.5px;
+  }
+  .front-foot .tag{ font-style:italic; }
+
+  /* ===== BACK ===== */
+  .back{
+    background:#fff;
+    color:var(--navy-deep);
+    padding:0;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .back-head{
+    background:var(--navy);
+    color:#fff;
+    padding:10px 16px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .back-head img{ width:20px; height:20px; object-fit:contain; background:#fff; border-radius:4px; padding:2px; }
+  .back-head .t{
+    font-family:'Archivo Black', sans-serif;
+    font-size:9.5px;
+    letter-spacing:0.4px;
+  }
+  .back-head .t small{
+    display:block;
+    font-family:'Archivo', sans-serif;
+    font-weight:500;
+    font-size:6px;
+    letter-spacing:1.2px;
+    color:var(--gold-soft);
+    text-transform:uppercase;
+    margin-top:2px;
+  }
+
+  .back-body{
+    flex:1;
+    padding:10px 16px 6px 16px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+
+  .contact-row{
+    display:flex;
+    gap:8px;
+    font-size:7.6px;
+    line-height:1.35;
+  }
+  .contact-row .k{
+    font-family:'Space Mono', monospace;
+    font-size:6.4px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--gold);
+    background:var(--navy);
+    padding:1px 5px;
+    border-radius:3px;
+    height:fit-content;
+    flex-shrink:0;
+  }
+  .contact-row .v{ color:var(--navy-deep); word-break:break-word; }
+
+  .services{
+    margin-top:2px;
+    font-size:6.4px;
+    letter-spacing:0.3px;
+    color:#4a5170;
+    line-height:1.5;
+  }
+  .services b{ color:var(--navy-deep); }
+
+  .back-foot{
+    background:var(--gold);
+    padding:5px 16px;
+    font-family:'Archivo Black', sans-serif;
+    font-size:6.6px;
+    letter-spacing:0.8px;
+    color:var(--navy-deep);
+    text-transform:uppercase;
+    display:flex;
+    justify-content:space-between;
+  }
+
+  @media print{
+    body{ background:#fff; padding:0; gap:0; }
+    .toolbar{ display:none; }
+    .stage{ gap:0.25in; }
+    .card{ box-shadow:none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <b>Pino Enterprises Nig Limited — Staff ID Card (CR80, 3.375in × 2.125in)</b><br>
+    Standard credit-card size, ready for double-sided PVC printing. Use your browser's Print dialog → set paper/scale to 100% → print or export as PDF.
+  </div>
+
+  <div class="stage">
+
+    <!-- FRONT -->
+    <div class="card front">
+      <div class="front-top">
+        <img class="logo-mark" src="pino-logo.png" alt="Pino Enterprises logo">
+        <div class="brandblock">
+          <div class="co">PINO ENTERPRISES</div>
+          <div class="sub">Nig Limited</div>
+        </div>
+        <div class="idtag">ID&nbsp;NO.<br>PINO/001/2026</div>
+      </div>
+
+      <div class="front-main">
+        <div class="photo-slot"><span>PK</span></div>
+        <div class="who">
+          <div class="name">PETER KOLADE</div>
+          <div class="role">Chief Executive Officer</div>
+          <div class="realname">Company: Pino Enterprises Nig Limited</div>
+        </div>
+      </div>
+
+      <div class="front-foot">
+        <span class="tag">We give you the best in electronics</span>
+        <span>Authorized&nbsp;Personnel</span>
+      </div>
+    </div>
+
+    <!-- BACK -->
+    <div class="card back">
+      <div class="back-head">
+        <img src="pino-logo.png" alt="Pino Enterprises logo">
+        <div class="t">CONTACT & COMPANY INFO
+          <small>If found, please return to nearest branch</small>
+        </div>
+      </div>
+
+      <div class="back-body">
+        <div class="contact-row">
+          <div class="k">Phone</div>
+          <div class="v">0802 784 8783</div>
+        </div>
+        <div class="contact-row">
+          <div class="k">Email</div>
+          <div class="v">koladebolajimorayomi@gmail.com</div>
+        </div>
+        <div class="contact-row">
+          <div class="k">Address</div>
+          <div class="v">Four Junctions, Oko-Baale, Oju-Ore, Sango-Ota, Ogun State</div>
+        </div>
+
+        <div class="services">
+          <b>Services:</b> CCTV Cameras · DSTV/GOTV Installation · Free-to-Air · Solar Fans · Smart TVs · PS2–PS5 · Phone & Electronic Accessories
+        </div>
+      </div>
+
+      <div class="back-foot">
+        <span>Quality · Affordable · Reliable</span>
+        <span>PINO&nbsp;©&nbsp;2026</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
