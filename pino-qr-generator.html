@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pino Enterprises — QR Code Generator</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&display=swap');
+
+  :root{
+    --navy:#0B1F4E;
+    --navy-deep:#081638;
+    --gold:#F2B12E;
+    --gold-soft:#F7CB6E;
+  }
+
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    font-family:'Archivo', sans-serif;
+    background:#EDEEF2;
+    color:#1c2440;
+    padding:28px 16px 60px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .wrap{ width:100%; max-width:420px; }
+
+  h1{
+    font-family:'Archivo Black', sans-serif;
+    font-size:19px;
+    color:var(--navy);
+    text-align:center;
+    margin:0 0 4px;
+  }
+  .sub{
+    text-align:center;
+    font-size:12.5px;
+    color:#555c78;
+    margin-bottom:22px;
+    line-height:1.5;
+  }
+
+  .field{ margin-bottom:14px; }
+  .field label{
+    display:block;
+    font-size:12px;
+    font-weight:700;
+    color:var(--navy);
+    margin-bottom:6px;
+  }
+  .field input{
+    width:100%;
+    padding:11px 13px;
+    border:1.5px solid #d7dae3;
+    border-radius:8px;
+    font-family:'Archivo', sans-serif;
+    font-size:13.5px;
+    outline:none;
+    background:#fff;
+  }
+  .field input:focus{ border-color:var(--gold); }
+
+  #genBtn{
+    width:100%;
+    background:var(--navy);
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:12px;
+    font-family:'Archivo', sans-serif;
+    font-weight:700;
+    font-size:13.5px;
+    cursor:pointer;
+    margin-bottom:22px;
+  }
+
+  .card{
+    background:#fff;
+    border-radius:16px;
+    padding:24px;
+    box-shadow:0 12px 30px -10px rgba(8,22,56,0.25);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  #canvasHolder{
+    position:relative;
+    display:inline-block;
+  }
+
+  .caption{
+    margin-top:14px;
+    font-family:'Archivo Black', sans-serif;
+    font-size:12px;
+    letter-spacing:1px;
+    color:var(--navy);
+    text-align:center;
+  }
+  .caption small{
+    display:block;
+    margin-top:2px;
+    font-family:'Archivo', sans-serif;
+    font-weight:500;
+    font-size:10px;
+    letter-spacing:0.3px;
+    color:#8a90a6;
+    word-break:break-all;
+  }
+
+  #downloadBtn{
+    margin-top:18px;
+    width:100%;
+    background:var(--gold);
+    color:var(--navy-deep);
+    border:none;
+    border-radius:8px;
+    padding:12px;
+    font-family:'Archivo', sans-serif;
+    font-weight:700;
+    font-size:13.5px;
+    cursor:pointer;
+  }
+  #downloadBtn:disabled{ opacity:0.5; cursor:not-allowed; }
+
+  .hint{
+    margin-top:16px;
+    font-size:11px;
+    color:#8a90a6;
+    text-align:center;
+    line-height:1.6;
+  }
+
+  #qrTemp{ display:none; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>PINO Enterprises — QR Code Generator</h1>
+  <p class="sub">Paste any link below (your current .pages.dev site now, or your .com later) and download a print-ready branded QR code for packing boxes, flyers, or the invoice.</p>
+
+  <div class="field">
+    <label>Link to encode</label>
+    <input type="text" id="linkInput" value="https://pino-enterprises.pages.dev">
+  </div>
+
+  <button id="genBtn">Generate QR Code</button>
+
+  <div class="card">
+    <div id="canvasHolder">
+      <canvas id="finalCanvas" width="440" height="520"></canvas>
+    </div>
+    <button id="downloadBtn" disabled>Download PNG</button>
+  </div>
+
+  <p class="hint">Scan it once yourself before printing to confirm it opens the right link. High error-correction is used so the logo in the middle won't stop it from scanning.</p>
+
+  <div id="qrTemp"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  const LOGO_URL = "https://res.cloudinary.com/dnx2afsnl/image/upload/v1784750449/file_000000000d7481f4b686ff8db301fd35_rziflr.png";
+  const NAVY = "#0B1F4E";
+  const GOLD = "#F2B12E";
+
+  const linkInput = document.getElementById('linkInput');
+  const genBtn = document.getElementById('genBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const finalCanvas = document.getElementById('finalCanvas');
+  const ctx = finalCanvas.getContext('2d');
+  const qrTemp = document.getElementById('qrTemp');
+
+  function drawPlaceholder(msg){
+    ctx.clearRect(0,0,finalCanvas.width, finalCanvas.height);
+    ctx.fillStyle = "#f3f4f8";
+    ctx.fillRect(0,0,finalCanvas.width, finalCanvas.height);
+    ctx.fillStyle = "#9098b0";
+    ctx.font = "13px Archivo, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(msg, finalCanvas.width/2, finalCanvas.height/2);
+  }
+
+  function generate(){
+    const url = linkInput.value.trim();
+    if(!url){ alert('Please enter a link first.'); return; }
+
+    downloadBtn.disabled = true;
+    drawPlaceholder('Generating...');
+    qrTemp.innerHTML = '';
+
+    // Render the raw QR code with high error correction (tolerates the logo overlay)
+    new QRCode(qrTemp, {
+      text: url,
+      width: 360,
+      height: 360,
+      colorDark: NAVY,
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+
+    // qrcode.js renders async-ish via image; wait briefly then compose
+    setTimeout(() => composeFinal(url), 250);
+  }
+
+  function composeFinal(url){
+    const qrImgEl = qrTemp.querySelector('img') || qrTemp.querySelector('canvas');
+    if(!qrImgEl){ drawPlaceholder('Could not generate — try again.'); return; }
+
+    const pad = 40;
+    const qrSize = 360;
+    const W = qrSize + pad*2;
+    const H = qrSize + pad*2 + 90;
+    finalCanvas.width = W;
+    finalCanvas.height = H;
+
+    // background card
+    ctx.clearRect(0,0,W,H);
+    roundRect(ctx, 0, 0, W, H, 20);
+    ctx.fillStyle = "#ffffff";
+    ctx.fill();
+
+    // gold border accent top
+    ctx.fillStyle = GOLD;
+    roundRectTop(ctx, 0, 0, W, 8, 20);
+    ctx.fill();
+
+    // draw QR
+    const drawQr = () => {
+      ctx.drawImage(qrImgEl, pad, pad, qrSize, qrSize);
+
+      // white rounded plate behind logo
+      const logoBoxSize = 78;
+      const cx = pad + qrSize/2;
+      const cy = pad + qrSize/2;
+      ctx.fillStyle = "#ffffff";
+      roundRect(ctx, cx - logoBoxSize/2, cy - logoBoxSize/2, logoBoxSize, logoBoxSize, 12);
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = NAVY;
+      roundRect(ctx, cx - logoBoxSize/2, cy - logoBoxSize/2, logoBoxSize, logoBoxSize, 12);
+      ctx.stroke();
+
+      const logo = new Image();
+      logo.crossOrigin = "anonymous";
+      logo.onload = () => {
+        const logoSize = 60;
+        ctx.drawImage(logo, cx - logoSize/2, cy - logoSize/2, logoSize, logoSize);
+        finishCaption(url);
+      };
+      logo.onerror = () => finishCaption(url); // still usable without logo
+      logo.src = LOGO_URL;
+    };
+
+    if(qrImgEl.tagName === 'IMG' && !qrImgEl.complete){
+      qrImgEl.onload = drawQr;
+    } else {
+      drawQr();
+    }
+  }
+
+  function finishCaption(url){
+    const W = finalCanvas.width;
+    const capY = 40 + 360 + 34;
+    ctx.fillStyle = NAVY;
+    ctx.font = "700 15px Archivo, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("SCAN TO VISIT US ONLINE", W/2, capY);
+
+    ctx.fillStyle = "#8a90a6";
+    ctx.font = "500 10.5px Archivo, sans-serif";
+    let displayUrl = url.replace(/^https?:\/\//, '');
+    if(displayUrl.length > 42) displayUrl = displayUrl.slice(0,42) + '…';
+    ctx.fillText(displayUrl, W/2, capY + 20);
+
+    downloadBtn.disabled = false;
+  }
+
+  function roundRect(ctx,x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);
+    ctx.arcTo(x+w,y,x+w,y+h,r);
+    ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r);
+    ctx.arcTo(x,y,x+w,y,r);
+    ctx.closePath();
+  }
+  function roundRectTop(ctx,x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);
+    ctx.lineTo(x+w-r,y);
+    ctx.arcTo(x+w,y,x+w,y+r,r);
+    ctx.lineTo(x+w,y+h);
+    ctx.lineTo(x,y+h);
+    ctx.lineTo(x,y+r);
+    ctx.arcTo(x,y,x+r,y,r);
+    ctx.closePath();
+  }
+
+  downloadBtn.addEventListener('click', () => {
+    const link = document.createElement('a');
+    const safeName = linkInput.value.replace(/https?:\/\//,'').replace(/[^a-z0-9]+/gi,'-').replace(/^-+|-+$/g,'');
+    link.download = `Pino-QR-${safeName || 'code'}.png`;
+    link.href = finalCanvas.toDataURL('image/png');
+    link.click();
+  });
+
+  genBtn.addEventListener('click', generate);
+
+  // auto-generate on load with the default link
+  window.addEventListener('load', () => setTimeout(generate, 300));
+</script>
+
+</body>
+</html>
